@@ -1,4 +1,6 @@
 
+> Leia em Português (pt-br) se preferir: [README](README-pt_br.md)
+
 # The Kod Programming Language
 
 Welcome to the official documentation for the Kod programming language!
