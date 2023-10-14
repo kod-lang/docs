@@ -1,0 +1,38 @@
+
+chunk           ::= stmt* EOF
+
+stmt            ::= block
+                  | ( 'let' | 'const' ) IDENT '=' expr ';'
+                  | 'function' IDENT func
+                  | 'if' '(' expr ')' stmt ( 'else' stmt )?
+                  | 'while' '(' expr ')' stmt
+                  | 'continue' ';'
+                  | 'break' ';'
+                  | 'return' expr? ';'
+
+block           ::= '{' stmt* '}'
+
+func            ::= ( '[' IDENT ( ',' IDENT )* ']' )? '(' ( '&'? IDENT ( ',' '&'? IDENT )* )? ')' block
+
+expr            ::= and_expr ( '||' and_expr )*
+
+and_expr        ::= eq_expr ( '&&' eq_expr )*
+
+eq_expr         ::= comp_expr ( ( '==' | '!=' ) comp_expr )*
+
+comp_expr       ::= add_expr ( ( '<' | '<=' | '>' | '>=' ) add_expr )*
+
+add_expr        ::= mul_expr ( ( '+' | '-' ) mul_expr )*
+
+mul_expr        ::= unary_expr ( ( '*' | '/' | '%' ) unary_expr )*
+
+unary_expr      ::= ( '!' | '-' ) unary_expr | call_expr
+
+call_expr       ::= prim_expr ( '(' ( expr ( ',' expr )* )? ')' )*
+
+prim_expr       ::= literal
+                  | 'function' func
+                  | '&'? IDENT
+                  | '(' expr ')'
+
+literal         ::= 'null' | 'false' | 'true' | NUMBER | STRING
